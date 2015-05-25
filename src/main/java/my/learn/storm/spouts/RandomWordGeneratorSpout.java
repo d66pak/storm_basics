@@ -18,6 +18,7 @@ import java.util.Random;
  */
 public class RandomWordGeneratorSpout implements IRichSpout {
 
+    private static final long serialVersionUID = 1L;
     private static final String RANDOM_WORDS = "learnmetal polyethenemoldy segmentconstant nyepolish warningchromate " +
             "pelvicjangle ethologyirregular flexintegral networkdevice doubleride hatedcows mayonnaisemutes " +
             "profilegarlic dronefounder immodestbrunnich allplace sizzlegracious firstchase estuaryinner finitegamete " +
