@@ -37,11 +37,22 @@ public class RandomWordPrintTopology
                 new RandomWordGeneratorSpout(), 1);
 
         // Bolt creation
+
+        /**
+         *  Bolt with input field name
+
         List<String> fieldList = new ArrayList<>();
         fieldList.add("word");
         topologyBuilder.setBolt(
                 "stdout_print_bolt",
                 new StdoutPrintBolt(fieldList), 1).shuffleGrouping("random_word_spout");
+         */
+
+        /**
+         * Bolt without input field name
+         */
+        topologyBuilder.setBolt("stdout_print_bolt", new StdoutPrintBolt(), 1)
+                .shuffleGrouping("random_word_spout");
 
         // Config settings
         Config config = new Config();

@@ -6,6 +6,7 @@ import backtype.storm.topology.IRichBolt;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Tuple;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,17 @@ public class StdoutPrintBolt implements IRichBolt {
     private static final long serialVersionUID = 1L;
 
     private List<String> mInputFields;
+
+    /**
+     * Default Constructor
+     *
+     * If input filed list is not provided then it is assumed that there
+     * is only one field at index zero
+     */
+    public StdoutPrintBolt() {
+
+        mInputFields = new ArrayList<String>(0);
+    }
 
     public StdoutPrintBolt(List<String> inputFields) {
 
@@ -33,9 +45,15 @@ public class StdoutPrintBolt implements IRichBolt {
     @Override
     public void execute(Tuple input) {
 
-        for (String field : mInputFields) {
+        if (mInputFields.isEmpty()) {
 
-            System.out.println(field + " : " + input.getStringByField(field));
+            System.out.println("Default field : " + input.getString(0));
+        } else {
+
+            for (String field : mInputFields) {
+
+                System.out.println(field + " : " + input.getStringByField(field));
+            }
         }
     }
 
