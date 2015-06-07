@@ -39,6 +39,9 @@ public class RandomWordGeneratorSpout implements IRichSpout {
     private final Random mRandom = new Random();
     private int mEmitIntervalInMS = 5000;
 
+    // To check if two tasks use the same instance of spout
+    private int mTaskId;
+
     public void RandomWordGeneratorSpout() {}
 
     public void RandomWordGeneratorSpout(int emitIntervalInMS) {
@@ -63,6 +66,7 @@ public class RandomWordGeneratorSpout implements IRichSpout {
         System.out.println("Open called...");
         mOutputCollector = collector;
         mRandomWordList = Arrays.asList(RANDOM_WORDS.split(" "));
+        updateTaskId(context.getThisTaskId());
     }
 
     @Override
@@ -110,5 +114,13 @@ public class RandomWordGeneratorSpout implements IRichSpout {
     public void fail(Object msgId) {
 
         System.out.println("FAIL msgId : " + msgId.toString());
+    }
+
+    synchronized private void updateTaskId(int id) {
+
+        System.out.println("Previoud task id : " + mTaskId);
+        mTaskId = id;
+        System.out.println("New task id : " + mTaskId);
+
     }
 }

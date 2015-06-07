@@ -47,12 +47,12 @@ public class StdoutPrintBolt implements IRichBolt {
 
         if (mInputFields.isEmpty()) {
 
-            System.out.println("Default field : " + input.getString(0));
+            System.out.println("Instance : " + this + " Default field : " + input.getString(0));
         } else {
 
             for (String field : mInputFields) {
 
-                System.out.println(field + " : " + input.getStringByField(field));
+                System.out.println("Instance : " + this + " " + field + " : " + input.getStringByField(field));
             }
         }
     }
