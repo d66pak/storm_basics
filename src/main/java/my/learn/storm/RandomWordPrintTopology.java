@@ -34,7 +34,7 @@ public class RandomWordPrintTopology
         // Spout creation
         topologyBuilder.setSpout(
                 "random_word_spout",
-                new RandomWordGeneratorSpout(), 1);
+                new RandomWordGeneratorSpout(), 1).setNumTasks(2);
 
         // Bolt creation
 
@@ -50,8 +50,16 @@ public class RandomWordPrintTopology
 
         /**
          * Bolt without input field name
+
+        topologyBuilder.setBolt("stdout_print_bolt", new StdoutPrintBolt(), 1)
+                .shuffleGrouping("random_word_spout");
+         */
+
+        /**
+         * Increasing TASK count
          */
         topologyBuilder.setBolt("stdout_print_bolt", new StdoutPrintBolt(), 1)
+                .setNumTasks(2) // No of tasks = 2
                 .shuffleGrouping("random_word_spout");
 
         // Config settings
