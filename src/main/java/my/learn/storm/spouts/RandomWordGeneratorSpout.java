@@ -37,6 +37,14 @@ public class RandomWordGeneratorSpout implements IRichSpout {
     private List<String> mRandomWordList;
     private SpoutOutputCollector mOutputCollector;
     private final Random mRandom = new Random();
+    private int mEmitIntervalInMS = 5000;
+
+    public void RandomWordGeneratorSpout() {}
+
+    public void RandomWordGeneratorSpout(int emitIntervalInMS) {
+
+        mEmitIntervalInMS = emitIntervalInMS;
+    }
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
@@ -85,6 +93,11 @@ public class RandomWordGeneratorSpout implements IRichSpout {
 
         String randomWord = mRandomWordList.get(mRandom.nextInt(mRandomWordList.size()));
         mOutputCollector.emit(new Values(randomWord));
+        try {
+            Thread.sleep(mEmitIntervalInMS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
