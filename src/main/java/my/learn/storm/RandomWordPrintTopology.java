@@ -2,22 +2,19 @@ package my.learn.storm;
 
 import backtype.storm.Config;
 import backtype.storm.StormSubmitter;
-import backtype.storm.generated.AlreadyAliveException;
-import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.topology.TopologyBuilder;
 import my.learn.storm.bolts.StdoutPrintBolt;
 import my.learn.storm.spouts.RandomWordGeneratorSpout;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Runs in Storm remote mode.
  * Expects topology name as first argument
+ *
+ * RandomWordGeneratorSpout --> StdoutPrintBolt
  */
 public class RandomWordPrintTopology
 {
-    public static void main( String[] args )
+    public static void main( String[] args ) throws Exception
     {
         if (args.length < 1) {
 
@@ -68,12 +65,6 @@ public class RandomWordPrintTopology
         config.setNumWorkers(2);
 
         // Submit the topology
-        try {
-            StormSubmitter.submitTopology(topologyName, config, topologyBuilder.createTopology());
-        } catch (AlreadyAliveException e) {
-            e.printStackTrace();
-        } catch (InvalidTopologyException e) {
-            e.printStackTrace();
-        }
+        StormSubmitter.submitTopology(topologyName, config, topologyBuilder.createTopology());
     }
 }
