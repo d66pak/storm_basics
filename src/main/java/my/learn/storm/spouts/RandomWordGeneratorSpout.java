@@ -6,6 +6,7 @@ import backtype.storm.topology.IRichSpout;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
+import backtype.storm.utils.Utils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -97,11 +98,7 @@ public class RandomWordGeneratorSpout implements IRichSpout {
 
         String randomWord = mRandomWordList.get(mRandom.nextInt(mRandomWordList.size()));
         mOutputCollector.emit(new Values(randomWord));
-        try {
-            Thread.sleep(mEmitIntervalInMS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Utils.sleep(mEmitIntervalInMS);
     }
 
     @Override
