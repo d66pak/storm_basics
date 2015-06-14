@@ -43,9 +43,9 @@ public class RandomWordGeneratorSpout implements IRichSpout {
     // To check if two tasks use the same instance of spout
     private int mTaskId;
 
-    public void RandomWordGeneratorSpout() {}
+    public RandomWordGeneratorSpout() {}
 
-    public void RandomWordGeneratorSpout(int emitIntervalInMS) {
+    public RandomWordGeneratorSpout(int emitIntervalInMS) {
 
         mEmitIntervalInMS = emitIntervalInMS;
     }
