@@ -19,6 +19,7 @@ public class StdoutPrintBolt implements IRichBolt {
     private static final long serialVersionUID = 1L;
 
     private List<String> mInputFields;
+    private OutputCollector mCollector;
 
     /**
      * Default Constructor
@@ -40,6 +41,7 @@ public class StdoutPrintBolt implements IRichBolt {
     public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
 
         System.out.println("Prepare called...");
+        mCollector = collector;
     }
 
     @Override
@@ -55,6 +57,9 @@ public class StdoutPrintBolt implements IRichBolt {
                 System.out.println("Instance : " + this + " " + field + " : " + input.getStringByField(field));
             }
         }
+
+        // If you don't ack then tuples will be replayed
+        mCollector.ack(input);
     }
 
     @Override
